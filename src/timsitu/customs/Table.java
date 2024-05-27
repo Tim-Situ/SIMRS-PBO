@@ -40,10 +40,10 @@ public class Table extends JTable{
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
         
                 Component com = super.getTableCellRendererComponent(jtable, o, selected, bln1, i, i1);
-                com.setBackground(Color.WHITE);
+//                com.setBackground(Color.WHITE);
                 setBorder(noFocusBorder);
                 if (selected) {
-                    com.setForeground(new Color(15, 89, 140));
+                    com.setForeground(new Color(255, 255, 255));
                 } else {
                     com.setForeground(new Color(102, 102, 102));
                 }

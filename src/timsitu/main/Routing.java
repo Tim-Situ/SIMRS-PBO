@@ -1,16 +1,12 @@
 package timsitu.main;
 
-import javax.swing.JComponent;
 import timsitu.models.User;
 import timsitu.models.UserSessions;
 import timsitu.pages.DashboardPage;
 import timsitu.pages.LoginPage;
 import timsitu.pages.MainPage;
-import static timsitu.pages.MainPage.mainPanel;
-import static timsitu.pages.MainPage.setForm;
 import timsitu.pages.apoteker.ApotekerPage;
 import timsitu.pages.dokter.DokterPage;
-import timsitu.pages.jadwal.FormJadwalPage;
 import timsitu.pages.jadwal.JadwalPage;
 import timsitu.pages.obat.ObatPage;
 import timsitu.pages.obat.PengambilanObatPage;

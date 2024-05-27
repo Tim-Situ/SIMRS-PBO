@@ -49,7 +49,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Component id="jTextField3" min="-2" pref="233" max="-2" attributes="0"/>
+                                  <Component id="txtNama" min="-2" pref="233" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -58,8 +58,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextField1" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
-                                      <Component id="jTextField2" alignment="1" min="-2" pref="233" max="-2" attributes="0"/>
+                                      <Component id="txtKode" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
+                                      <Component id="txtNIP" alignment="1" min="-2" pref="233" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
@@ -73,11 +73,11 @@
                                   <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rbPria" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                                          <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="rbWanita" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="cldrTes" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
+                                      <Component id="dtTanggalLahir" alignment="0" min="-2" pref="233" max="-2" attributes="0"/>
                                       <Component id="jScrollPane1" min="-2" pref="233" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -93,18 +93,18 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextField7" min="-2" pref="208" max="-2" attributes="0"/>
-                                      <Component id="jTextField6" min="-2" pref="208" max="-2" attributes="0"/>
-                                      <Component id="jTextField4" min="-2" pref="208" max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" min="-2" pref="208" max="-2" attributes="0"/>
+                                      <Component id="txtPassword" min="-2" pref="208" max="-2" attributes="0"/>
+                                      <Component id="txtUsername" min="-2" pref="208" max="-2" attributes="0"/>
+                                      <Component id="txtNoHp" min="-2" pref="208" max="-2" attributes="0"/>
+                                      <Component id="cbPoli" min="-2" pref="208" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jButton1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="btnSimpan" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="btnReset" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnDataTransaksi" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnDataDokter" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -121,9 +121,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextField4" alignment="1" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="txtNoHp" alignment="1" min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="txtKode" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -133,7 +133,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="jTextField2" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="txtNIP" min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="jLabel9" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
@@ -142,34 +142,34 @@
                                   <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jTextField3" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="txtNama" min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="jLabel10" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jComboBox1" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="cbPoli" min="-2" pref="35" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="jTextField6" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="txtUsername" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="cldrTes" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="dtTanggalLahir" min="-2" pref="35" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jRadioButton1" min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="jRadioButton2" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="rbPria" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="rbWanita" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jButton1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                                      <Component id="jButton2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="btnSimpan" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="btnReset" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnDataTransaksi" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="btnDataDokter" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane1" min="-2" pref="107" max="-2" attributes="0"/>
                           </Group>
@@ -179,7 +179,7 @@
                               <Component id="jLabel5" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="jLabel11" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                                  <Component id="jTextField7" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="txtPassword" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -229,7 +229,7 @@
             <Property name="text" type="java.lang.String" value="Nama Lengkap"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtKode">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -244,7 +244,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtNIP">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -253,25 +253,28 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnSimpan">
           <Properties>
             <Property name="text" type="java.lang.String" value="Simpan"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimpanActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnReset">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reset"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResetActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDataTransaksi">
+        <Component class="javax.swing.JButton" name="btnDataDokter">
           <Properties>
             <Property name="text" type="java.lang.String" value="Data Dokter"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDataTransaksiActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDataDokterActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -281,7 +284,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="taAlamat">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
@@ -294,7 +297,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="txtNama">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -319,7 +322,7 @@
             <Property name="text" type="java.lang.String" value="Jenis Kelamin"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+        <Component class="javax.swing.JRadioButton" name="rbPria">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="btngrpJenisKelamin"/>
@@ -327,7 +330,7 @@
             <Property name="text" type="java.lang.String" value="Pria"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+        <Component class="javax.swing.JRadioButton" name="rbWanita">
           <Properties>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="btngrpJenisKelamin"/>
@@ -351,7 +354,7 @@
             <Property name="text" type="java.lang.String" value="No HP"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="txtNoHp">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -368,7 +371,7 @@
             <Property name="text" type="java.lang.String" value="Poliklinik"/>
           </Properties>
         </Component>
-        <Component class="de.wannawork.jcalendar.JCalendarComboBox" name="cldrTes">
+        <Component class="de.wannawork.jcalendar.JCalendarComboBox" name="dtTanggalLahir">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -378,20 +381,12 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cbPoli">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -404,7 +399,7 @@
             <Property name="text" type="java.lang.String" value="Username"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="txtUsername">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -421,7 +416,7 @@
             <Property name="text" type="java.lang.String" value="Password"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField7">
+        <Component class="javax.swing.JTextField" name="txtPassword">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">

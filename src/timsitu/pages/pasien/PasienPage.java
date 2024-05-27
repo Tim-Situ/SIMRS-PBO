@@ -1,12 +1,23 @@
 package timsitu.pages.pasien;
 
-import timsitu.pages.obat.*;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import timsitu.events.TableActionEvent;
+import timsitu.models.Pasien;
+import timsitu.models.TableActionCellEditor;
+import timsitu.models.TableActionCellRender;
 import timsitu.pages.*;
 
 public class PasienPage extends javax.swing.JPanel {
+    
+    ArrayList<Pasien> dataPasien;
 
     public PasienPage() {
         
@@ -18,6 +29,67 @@ public class PasienPage extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                MainPage.setForm(new FormPasienPage(dataPasien.get(row)));
+            }
+
+            @Override
+            public void onDelete(int row) {
+                int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin menghapus data ini?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    try {
+                        if (tblPasien.isEditing()) {
+                            tblPasien.getCellEditor().stopCellEditing();
+                        }
+                        dataPasien.get(row).deleteData();
+                        
+                        showData();
+                        JOptionPane.showMessageDialog(null, "Data Pasien Berhasil Dihapus...");
+                        
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PasienPage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                
+            }
+
+            @Override
+            public void onView(int row) {
+                System.out.println("View row : " + row);
+            }
+        };
+        
+        tblPasien.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
+        tblPasien.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(event));
+        
+        showData();
+        
+    }
+    
+    private void showData(){
+        DefaultTableModel tableModel;
+        tableModel = (DefaultTableModel)tblPasien.getModel();
+        tableModel.getDataVector().removeAllElements();
+        
+        dataPasien = Pasien.getAllData();
+        
+        int no = 1;
+        
+        for (Pasien pasien : dataPasien) {
+            tableModel.addRow(new Object[]{
+                no++,
+                pasien.getKode(),
+                pasien.getNama(),
+                pasien.getTanggalLahir(),
+                pasien.getJenisKelamin().toString(),
+                pasien.getNoHp(),
+                pasien.getAlamat()
+            });
+        } 
     }
 
     /**
@@ -34,6 +106,7 @@ public class PasienPage extends javax.swing.JPanel {
         tblPasien = new timsitu.customs.Table();
         jLabel1 = new javax.swing.JLabel();
         btnTambah = new javax.swing.JButton();
+        btnTambah1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(829, 508));
 
@@ -45,14 +118,14 @@ public class PasienPage extends javax.swing.JPanel {
 
         tblPasien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"  1", "PSN01", "Fauzein Mulya Warman", "02-12-2003", "Pria", "08457564676", "Padang"}
+
             },
             new String [] {
-                "No", "Kode", "Nama", "Tanggal Lahir", "Jenis Kelamin", "No HP", "Alamat"
+                "No", "Kode", "Nama", "Tanggal Lahir", "Jenis Kelamin", "No HP", "Alamat", "Aksi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -74,6 +147,15 @@ public class PasienPage extends javax.swing.JPanel {
             }
         });
 
+        btnTambah1.setBackground(new java.awt.Color(40, 167, 69));
+        btnTambah1.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambah1.setText("Refresh Data");
+        btnTambah1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambah1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -84,8 +166,10 @@ public class PasienPage extends javax.swing.JPanel {
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTambah1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE))
+                    .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -94,31 +178,37 @@ public class PasienPage extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTambah1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        MainPage.setForm(new FormPasienPage("tambah"));
+        MainPage.setForm(new FormPasienPage(null));
     }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnTambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambah1ActionPerformed
+        showData();
+    }//GEN-LAST:event_btnTambah1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnTambah1;
     private javax.swing.JLabel jLabel1;
     private timsitu.customs.PanelBorder panelBorder1;
     private javax.swing.JScrollPane spTable;

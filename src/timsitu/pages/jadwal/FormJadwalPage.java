@@ -84,7 +84,7 @@ public class FormJadwalPage extends javax.swing.JPanel {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Pilih Dokter ---", "Dr. Alex", "Dr. Ryan", "Dr. Anwar" }));
 
         jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel6.setText("Stok Obat");
+        jLabel6.setText("Ruangan");
 
         jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -176,10 +176,6 @@ public class FormJadwalPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
     private void btnDataTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataTransaksiActionPerformed
         MainPage.setForm(new ObatPage());
     }//GEN-LAST:event_btnDataTransaksiActionPerformed
@@ -187,6 +183,10 @@ public class FormJadwalPage extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -21,12 +21,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelBorder1" alignment="0" pref="953" max="32767" attributes="0"/>
+          <Component id="panelBorder1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelBorder1" alignment="0" pref="607" max="32767" attributes="0"/>
+          <Component id="panelBorder1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -50,9 +50,11 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnTambah1" min="-2" pref="118" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnTambah" min="-2" pref="118" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="spTable" pref="893" max="32767" attributes="0"/>
+                      <Component id="spTable" pref="769" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
@@ -65,10 +67,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnTambah" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnTambah1" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="spTable" min="-2" pref="408" max="-2" attributes="0"/>
-                  <EmptySpace pref="115" max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -90,28 +93,15 @@
             <Component class="timsitu.customs.Table" name="tblPasien">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="1">
-                    <Column editable="false" title="No" type="java.lang.Object">
-                      <Data value="  1"/>
-                    </Column>
-                    <Column editable="false" title="Kode" type="java.lang.Object">
-                      <Data value="PSN01"/>
-                    </Column>
-                    <Column editable="false" title="Nama" type="java.lang.Object">
-                      <Data value="Fauzein Mulya Warman"/>
-                    </Column>
-                    <Column editable="false" title="Tanggal Lahir" type="java.lang.Object">
-                      <Data value="02-12-2003"/>
-                    </Column>
-                    <Column editable="false" title="Jenis Kelamin" type="java.lang.Object">
-                      <Data value="Pria"/>
-                    </Column>
-                    <Column editable="false" title="No HP" type="java.lang.Object">
-                      <Data value="08457564676"/>
-                    </Column>
-                    <Column editable="false" title="Alamat" type="java.lang.Object">
-                      <Data value="Padang"/>
-                    </Column>
+                  <Table columnCount="8" rowCount="0">
+                    <Column editable="false" title="No" type="java.lang.Object"/>
+                    <Column editable="false" title="Kode" type="java.lang.Object"/>
+                    <Column editable="false" title="Nama" type="java.lang.Object"/>
+                    <Column editable="false" title="Tanggal Lahir" type="java.lang.Object"/>
+                    <Column editable="false" title="Jenis Kelamin" type="java.lang.Object"/>
+                    <Column editable="false" title="No HP" type="java.lang.Object"/>
+                    <Column editable="false" title="Alamat" type="java.lang.Object"/>
+                    <Column editable="true" title="Aksi" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
@@ -141,6 +131,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnTambah1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="45" green="a7" red="28" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Refresh Data"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambah1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

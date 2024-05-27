@@ -108,10 +108,14 @@ public class LoginPage extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         
         try {
-            AuthController.login(txtUsername.getText(), txtPassword.getText());
-            MainPage mainPage = new MainPage();
-            mainPage.setVisible(true);
-            this.dispose();
+            Boolean login = AuthController.login(txtUsername.getText(), txtPassword.getText());
+            
+            if(login){
+                MainPage mainPage = new MainPage();
+                mainPage.setVisible(true);
+                this.dispose();
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }

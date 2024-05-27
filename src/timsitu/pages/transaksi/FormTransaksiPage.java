@@ -78,37 +78,34 @@ public class FormTransaksiPage extends javax.swing.JPanel {
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Otomatis");
+        jTextField1.setText("TRS01");
         jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField1.setEnabled(false);
 
+        jTextField2.setText("PRS01");
         jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jTextField3.setEditable(false);
         jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("Otomatis");
+        jTextField3.setText("Fauzein Mulya Warman");
         jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField3.setEnabled(false);
 
         jTextField4.setEditable(false);
         jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setText("Otomatis");
+        jTextField4.setText("Dr. Wiliam");
         jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField4.setEnabled(false);
 
         jTextField5.setEditable(false);
         jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setText("Otomatis");
+        jTextField5.setText("Rp 80000");
         jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField5.setEnabled(false);
 
+        jTextField6.setText("Rp 100000");
         jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jTextField7.setEditable(false);
         jTextField7.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField7.setText("Otomatis");
+        jTextField7.setText("Rp 20000");
         jTextField7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField7.setEnabled(false);
 
         jButton1.setText("Simpan");
 

@@ -50,20 +50,20 @@
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jComboBox1" pref="233" max="32767" attributes="0"/>
-                              <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextField4" max="32767" attributes="0"/>
-                              <Component id="jTimeChooser3" max="32767" attributes="0"/>
-                              <Component id="jTimeChooser4" alignment="0" max="32767" attributes="0"/>
+                              <Component id="cbNamaDokter" pref="233" max="32767" attributes="0"/>
+                              <Component id="cbHari" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtRuangan" max="32767" attributes="0"/>
+                              <Component id="tcJamMulai" max="32767" attributes="0"/>
+                              <Component id="tcJamSelesai" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jButton1" min="-2" pref="95" max="-2" attributes="0"/>
+                                  <Component id="btnSimpan" min="-2" pref="95" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" pref="95" max="-2" attributes="0"/>
+                                  <Component id="btnReset" min="-2" pref="95" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnDataTransaksi" max="32767" attributes="0"/>
+                              <Component id="btnDataJadwal" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -78,20 +78,20 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButton2" max="32767" attributes="0"/>
+                      <Component id="btnReset" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="btnSimpan" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="3" max="32767" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="cbNamaDokter" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="jComboBox2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="cbHari" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="btnDataTransaksi" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="btnDataJadwal" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -103,11 +103,11 @@
                           <Component id="jLabel6" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jTimeChooser3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="tcJamMulai" min="-2" pref="35" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="jTimeChooser4" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="tcJamSelesai" min="-2" pref="35" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Component id="jTextField4" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="txtRuangan" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="298" max="32767" attributes="0"/>
@@ -143,25 +143,28 @@
             <Property name="text" type="java.lang.String" value="Hari"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnSimpan">
           <Properties>
             <Property name="text" type="java.lang.String" value="Simpan"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimpanActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="btnReset">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reset"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResetActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDataTransaksi">
+        <Component class="javax.swing.JButton" name="btnDataJadwal">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Data Obat"/>
+            <Property name="text" type="java.lang.String" value="Data Jadwal"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDataTransaksiActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDataJadwalActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -172,15 +175,10 @@
             <Property name="text" type="java.lang.String" value="Jam Mulai"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cbNamaDokter">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="--- Pilih Dokter ---"/>
-                <StringItem index="1" value="Dr. Alex"/>
-                <StringItem index="2" value="Dr. Ryan"/>
-                <StringItem index="3" value="Dr. Anwar"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -195,7 +193,7 @@
             <Property name="text" type="java.lang.String" value="Ruangan"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="txtRuangan">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -204,20 +202,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRuanganActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="cbHari">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="--- Pilih Hari ---"/>
-                <StringItem index="1" value="Senin"/>
-                <StringItem index="2" value="Selasa"/>
-                <StringItem index="3" value="Rabu"/>
-                <StringItem index="4" value="Kamis"/>
-                <StringItem index="5" value="Jumat"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -232,9 +223,9 @@
             <Property name="text" type="java.lang.String" value="Jam Selesai"/>
           </Properties>
         </Component>
-        <Component class="lu.tudor.santec.jtimechooser.JTimeChooser" name="jTimeChooser3">
+        <Component class="lu.tudor.santec.jtimechooser.JTimeChooser" name="tcJamMulai">
         </Component>
-        <Component class="lu.tudor.santec.jtimechooser.JTimeChooser" name="jTimeChooser4">
+        <Component class="lu.tudor.santec.jtimechooser.JTimeChooser" name="tcJamSelesai">
         </Component>
       </SubComponents>
     </Container>

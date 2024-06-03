@@ -4,25 +4,63 @@
  */
 package timsitu.pages.jadwal;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import timsitu.enums.EnumHari;
+import timsitu.models.Dokter;
+import timsitu.models.Jadwal;
+import timsitu.models.Obat;
 import timsitu.pages.obat.*;
-import timsitu.pages.poliklinik.*;
-import timsitu.pages.transaksi.*;
 import timsitu.pages.MainPage;
-import timsitu.pages.dokter.DokterPage;
 public class FormJadwalPage extends javax.swing.JPanel {
 
-    String type;
-    String kode;
+    Jadwal data;
+    EnumHari[] dataHari;
+    ArrayList<Dokter> dataDokter;
     
-    public FormJadwalPage(String type) {
+    public FormJadwalPage(Jadwal data) throws ParseException {
         initComponents();
-        this.type = type;
+        this.data = data;
+   
+        dataHari = EnumHari.values();
+        
+        for (EnumHari hari : dataHari) {
+            cbHari.addItem(hari.toString());
+        }
+        
+        resetForm();
     }
     
-    public FormJadwalPage(String type, String kode) {
-        initComponents();
-        this.type = type;
-        this.kode = kode;
+    private void resetForm() throws ParseException{  
+        cbNamaDokter.removeAllItems();
+        dataDokter = Dokter.getAllData();
+        
+        for (Dokter dokter : dataDokter) {
+            cbNamaDokter.addItem(dokter.getNama());
+        }
+        
+        if(data == null){
+            cbNamaDokter.setSelectedIndex(0);
+            cbHari.setSelectedIndex(0);
+            txtRuangan.setText(null);
+        }else{
+            cbNamaDokter.setSelectedItem(data.getDokter().getNama());
+            cbHari.setSelectedItem(data.getHari().toString());
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            Date jamMulai = sdf.parse(data.getJam_mulai());
+            Date jamSelesai = sdf.parse(data.getJam_selesai());
+            
+            tcJamMulai.setTime(jamMulai);
+            tcJamSelesai.setTime(jamSelesai);
+            txtRuangan.setText(data.getRuangan());
+        } 
     }
 
     /**
@@ -38,17 +76,17 @@ public class FormJadwalPage extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        btnDataTransaksi = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        btnDataJadwal = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbNamaDokter = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        txtRuangan = new javax.swing.JTextField();
+        cbHari = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jTimeChooser3 = new lu.tudor.santec.jtimechooser.JTimeChooser();
-        jTimeChooser4 = new lu.tudor.santec.jtimechooser.JTimeChooser();
+        tcJamMulai = new lu.tudor.santec.jtimechooser.JTimeChooser();
+        tcJamSelesai = new lu.tudor.santec.jtimechooser.JTimeChooser();
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -62,38 +100,39 @@ public class FormJadwalPage extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel4.setText("Hari");
 
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.setText("Simpan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Reset");
-
-        btnDataTransaksi.setText("Data Obat");
-        btnDataTransaksi.addActionListener(new java.awt.event.ActionListener() {
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDataTransaksiActionPerformed(evt);
+                btnResetActionPerformed(evt);
+            }
+        });
+
+        btnDataJadwal.setText("Data Jadwal");
+        btnDataJadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataJadwalActionPerformed(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel5.setText("Jam Mulai");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Pilih Dokter ---", "Dr. Alex", "Dr. Ryan", "Dr. Anwar" }));
-
         jLabel6.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel6.setText("Ruangan");
 
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtRuangan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtRuangan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtRuanganActionPerformed(evt);
             }
         });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Pilih Hari ---", "Senin", "Selasa", "Rabu", "Kamis", "Jumat" }));
 
         jLabel7.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel7.setText("Jam Selesai");
@@ -115,18 +154,18 @@ public class FormJadwalPage extends javax.swing.JPanel {
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(40, 40, 40)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, 233, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4)
-                            .addComponent(jTimeChooser3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTimeChooser4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbNamaDokter, 0, 233, Short.MAX_VALUE)
+                            .addComponent(cbHari, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtRuangan)
+                            .addComponent(tcJamMulai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tcJamSelesai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(50, 50, 50)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnDataTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDataJadwal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(308, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -136,17 +175,17 @@ public class FormJadwalPage extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(33, 33, 33)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbNamaDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDataTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbHari, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDataJadwal, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
@@ -156,11 +195,11 @@ public class FormJadwalPage extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addComponent(jTimeChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tcJamMulai, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jTimeChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tcJamSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtRuangan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(298, Short.MAX_VALUE))
         );
 
@@ -176,34 +215,73 @@ public class FormJadwalPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDataTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataTransaksiActionPerformed
-        MainPage.setForm(new ObatPage());
-    }//GEN-LAST:event_btnDataTransaksiActionPerformed
+    private void btnDataJadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataJadwalActionPerformed
+        MainPage.setForm(new JadwalPage());
+    }//GEN-LAST:event_btnDataJadwalActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        String kode = Jadwal.generateKode();
+        Dokter dokter = dataDokter.get(cbNamaDokter.getSelectedIndex());
+        EnumHari hari = EnumHari.valueOf(cbHari.getSelectedItem().toString());
+        String jamMulai = tcJamMulai.getFormatedTime();
+        String jamSelesai = tcJamSelesai.getFormatedTime();
+        String ruangan = txtRuangan.getText();
+        
+        if(!ruangan.equals("")){
+            try {
+                if(data == null){
+                    data = new Jadwal(kode, hari, dokter, jamMulai, jamSelesai, ruangan);
+                    data.simpanData();
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+                    JOptionPane.showMessageDialog(null, "Data Jadwal Dokter Berhasil Ditambahkan...");
+                }else{
+                    data.setDokter(dokter);
+                    data.setHari(hari);
+                    data.setJam_mulai(jamMulai);
+                    data.setJam_selesai(jamSelesai);
+                    data.setRuangan(ruangan);
+
+                    data.editData();
+                    JOptionPane.showMessageDialog(null, "Data Jadwal Dokter Berhasil Diubah...");
+                }
+
+                MainPage.setForm(new JadwalPage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),"Gagal", JOptionPane.WARNING_MESSAGE);
+            } 
+        }else{
+            JOptionPane.showMessageDialog(null,"Data tidak boleh ada yang kosong!!!","Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void txtRuanganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRuanganActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtRuanganActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        try {
+            resetForm();
+        } catch (ParseException ex) {
+            Logger.getLogger(FormJadwalPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnResetActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDataTransaksi;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnDataJadwal;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JComboBox<String> cbHari;
+    private javax.swing.JComboBox<String> cbNamaDokter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField4;
-    private lu.tudor.santec.jtimechooser.JTimeChooser jTimeChooser3;
-    private lu.tudor.santec.jtimechooser.JTimeChooser jTimeChooser4;
     private timsitu.customs.PanelBorder panelBorder1;
+    private lu.tudor.santec.jtimechooser.JTimeChooser tcJamMulai;
+    private lu.tudor.santec.jtimechooser.JTimeChooser tcJamSelesai;
+    private javax.swing.JTextField txtRuangan;
     // End of variables declaration//GEN-END:variables
 }

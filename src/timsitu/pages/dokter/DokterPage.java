@@ -11,11 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import timsitu.events.TableActionEvent;
 import timsitu.models.Dokter;
-import timsitu.models.Pasien;
 import timsitu.models.TableActionCellEditor;
 import timsitu.models.TableActionCellRender;
 import timsitu.pages.*;
-import timsitu.pages.pasien.FormPasienPage;
 import timsitu.pages.pasien.PasienPage;
 
 public class DokterPage extends javax.swing.JPanel {

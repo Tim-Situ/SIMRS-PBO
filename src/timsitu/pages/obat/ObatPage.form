@@ -16,12 +16,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelBorder1" pref="953" max="32767" attributes="0"/>
+          <Component id="panelBorder1" min="-2" pref="953" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelBorder1" pref="607" max="32767" attributes="0"/>
+          <Component id="panelBorder1" min="-2" pref="607" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -46,6 +46,8 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnRefresh" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="btnTambah" min="-2" pref="118" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -60,6 +62,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnTambah" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnRefresh" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="spTable" min="-2" pref="408" max="-2" attributes="0"/>
@@ -85,22 +88,14 @@
             <Component class="timsitu.customs.Table" name="tblObat">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="1">
-                    <Column editable="false" title="No" type="java.lang.Object">
-                      <Data value="  1"/>
-                    </Column>
-                    <Column editable="false" title="Kode" type="java.lang.Object">
-                      <Data value="OBT01"/>
-                    </Column>
-                    <Column editable="false" title="Nama Obat" type="java.lang.Object">
-                      <Data value="Sianida"/>
-                    </Column>
-                    <Column editable="false" title="Jenis" type="java.lang.Object">
-                      <Data value="Sirup"/>
-                    </Column>
-                    <Column editable="false" title="Harga" type="java.lang.Object">
-                      <Data value="10000"/>
-                    </Column>
+                  <Table columnCount="7" rowCount="0">
+                    <Column editable="false" title="No" type="java.lang.Object"/>
+                    <Column editable="false" title="Kode" type="java.lang.Object"/>
+                    <Column editable="false" title="Nama Obat" type="java.lang.Object"/>
+                    <Column editable="false" title="Jenis" type="java.lang.Object"/>
+                    <Column editable="false" title="Harga" type="java.lang.Object"/>
+                    <Column editable="false" title="Stok" type="java.lang.Object"/>
+                    <Column editable="true" title="Aksi" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
@@ -130,6 +125,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnRefresh">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="45" green="a7" red="28" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Refresh Data"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

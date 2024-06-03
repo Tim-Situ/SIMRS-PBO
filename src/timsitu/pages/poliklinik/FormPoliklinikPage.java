@@ -1,28 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package timsitu.pages.poliklinik;
 
-import timsitu.pages.transaksi.*;
+import javax.swing.JOptionPane;
+import timsitu.models.Poliklinik;
 import timsitu.pages.MainPage;
-import timsitu.pages.dokter.DokterPage;
 public class FormPoliklinikPage extends javax.swing.JPanel {
 
-    String type;
-    String kode;
+    Poliklinik poli;
     
-    public FormPoliklinikPage(String type) {
+    public FormPoliklinikPage(Poliklinik data) {
         initComponents();
-        this.type = type;
+        poli = data;
+        resetForm();
     }
     
-    public FormPoliklinikPage(String type, String kode) {
-        initComponents();
-        this.type = type;
-        this.kode = kode;
+    private void resetForm(){
+        if(poli == null){
+            txtKode.setText(Poliklinik.generateKode());
+            txtNama.setText(null);
+            taKeterangan.setText(null);
+            
+        }else{
+            txtKode.setText(poli.getKode());
+            txtNama.setText(poli.getNama_poli());
+            taKeterangan.setText(poli.getKeterangan());
+        } 
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,13 +40,13 @@ public class FormPoliklinikPage extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        btnDataTransaksi = new javax.swing.JButton();
+        txtKode = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
+        btnSimpan = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
+        btnDataPoliklinik = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taKeterangan = new javax.swing.JTextArea();
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -60,29 +63,38 @@ public class FormPoliklinikPage extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel4.setText("Keterangan");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Otomatis");
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField1.setEnabled(false);
+        txtKode.setEditable(false);
+        txtKode.setBackground(new java.awt.Color(255, 255, 255));
+        txtKode.setText("Otomatis");
+        txtKode.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtNama.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jButton1.setText("Simpan");
-
-        jButton2.setText("Reset");
-
-        btnDataTransaksi.setText("Data Poliklinik");
-        btnDataTransaksi.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.setText("Simpan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDataTransaksiActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jScrollPane1.setViewportView(jTextArea1);
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
+        btnDataPoliklinik.setText("Data Poliklinik");
+        btnDataPoliklinik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataPoliklinikActionPerformed(evt);
+            }
+        });
+
+        taKeterangan.setColumns(20);
+        taKeterangan.setRows(5);
+        taKeterangan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jScrollPane1.setViewportView(taKeterangan);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -99,16 +111,16 @@ public class FormPoliklinikPage extends javax.swing.JPanel {
                             .addComponent(jLabel4))
                         .addGap(113, 113, 113)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
+                            .addComponent(txtKode, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(txtNama)
                             .addComponent(jScrollPane1))
                         .addGap(95, 95, 95)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnDataTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDataPoliklinik, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -123,15 +135,15 @@ public class FormPoliklinikPage extends javax.swing.JPanel {
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1))))
+                            .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            .addComponent(btnSimpan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtKode))))
                 .addGap(18, 18, 18)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                        .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnDataTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDataPoliklinik, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -154,23 +166,56 @@ public class FormPoliklinikPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDataTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataTransaksiActionPerformed
+    private void btnDataPoliklinikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataPoliklinikActionPerformed
         MainPage.setForm(new PoliklinikPage());
-    }//GEN-LAST:event_btnDataTransaksiActionPerformed
+    }//GEN-LAST:event_btnDataPoliklinikActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        String kode = txtKode.getText();
+        String nama = txtNama.getText();
+        String keterangan = taKeterangan.getText();
+
+        if(!nama.equals("")){
+            try {
+                if(poli == null){
+                    poli = new Poliklinik(kode, nama, keterangan);
+                    poli.simpanData();
+
+                    JOptionPane.showMessageDialog(null, "Data Poli Berhasil Ditambahkan...");
+                }else{
+                    poli.setNama_poli(nama);
+                    poli.setKeterangan(keterangan);
+
+                    poli.editData();
+                    JOptionPane.showMessageDialog(null, "Data Poli Berhasil Diubah...");
+                }
+
+                MainPage.setForm(new PoliklinikPage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),"Gagal", JOptionPane.WARNING_MESSAGE);
+            } 
+        }else{
+            JOptionPane.showMessageDialog(null,"Data tidak boleh ada yang kosong!!!","Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        resetForm();
+    }//GEN-LAST:event_btnResetActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDataTransaksi;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnDataPoliklinik;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private timsitu.customs.PanelBorder panelBorder1;
+    private javax.swing.JTextArea taKeterangan;
+    private javax.swing.JTextField txtKode;
+    private javax.swing.JTextField txtNama;
     // End of variables declaration//GEN-END:variables
 }

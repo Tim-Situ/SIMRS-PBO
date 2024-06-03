@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import timsitu.enums.EnumJenisKelamin;
 import timsitu.models.Dokter;
 import timsitu.models.Poliklinik;
 import timsitu.models.User;
@@ -50,7 +51,7 @@ public class FormDokterPage extends javax.swing.JPanel {
                 Date date = dateFormat.parse(dokter.getTanggalLahir());
                 dtTanggalLahir.setDate(date);
                 
-                if(dokter.getJenisKelamin() == User.EnumJenisKelamin.PRIA){
+                if(dokter.getJenisKelamin() == EnumJenisKelamin.PRIA){
                     rbPria.setSelected(true);
                 }else{
                     rbWanita.setSelected(true);
@@ -340,7 +341,7 @@ public class FormDokterPage extends javax.swing.JPanel {
         String kode = txtKode.getText();
         String nip = txtNIP.getText();
         String nama = txtNama.getText();
-        User.EnumJenisKelamin jenis_kelamin = null;
+        EnumJenisKelamin jenis_kelamin = null;
         String no_hp = txtNoHp.getText();
         String alamat = taAlamat.getText();
         Poliklinik poli = dataPoli.get(cbPoli.getSelectedIndex());
@@ -353,9 +354,9 @@ public class FormDokterPage extends javax.swing.JPanel {
 
 
         if (rbPria.isSelected()) {
-            jenis_kelamin = User.EnumJenisKelamin.PRIA;
+            jenis_kelamin = EnumJenisKelamin.PRIA;
         } else if (rbWanita.isSelected()) {
-            jenis_kelamin = User.EnumJenisKelamin.WANITA;
+            jenis_kelamin = EnumJenisKelamin.WANITA;
         }
 
         if(!nip.equals("") && !nama.equals("") && jenis_kelamin != null && !no_hp.equals("") && !alamat.equals("") && !username.equals("") && !password.equals("")){

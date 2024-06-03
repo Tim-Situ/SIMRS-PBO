@@ -33,7 +33,7 @@ public class MenuComponent extends javax.swing.JPanel {
         
         if(UserSessions.getRole() == User.EnumRole.ADMIN){
             listMenu1.addItem(new Menu("0", "Dashboard", Menu.EnumMenuType.MENU));
-            listMenu1.addItem(new Menu("1", "Pendaftaran", Menu.EnumMenuType.MENU));
+            listMenu1.addItem(new Menu("1", "Reservasi", Menu.EnumMenuType.MENU));
             listMenu1.addItem(new Menu("2", "Transaksi", Menu.EnumMenuType.MENU));
             listMenu1.addItem(new Menu("3", "Jadwal Dokter", Menu.EnumMenuType.MENU));
             listMenu1.addItem(new Menu("4", " ", Menu.EnumMenuType.EMPTY));

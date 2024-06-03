@@ -2,11 +2,25 @@ package timsitu.pages.jadwal;
 
 import timsitu.pages.obat.*;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import timsitu.events.TableActionEvent;
+import timsitu.models.Jadwal;
+import timsitu.models.Obat;
+import timsitu.models.TableActionCellEditor;
+import timsitu.models.TableActionCellRender;
 import timsitu.pages.*;
+import timsitu.pages.pasien.PasienPage;
 
 public class JadwalPage extends javax.swing.JPanel {
+    
+    ArrayList<Jadwal> dataJadwal;
 
     public JadwalPage() {
         
@@ -18,6 +32,67 @@ public class JadwalPage extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                MainPage.setForm(new FormJadwalPage(dataJadwal.get(row)));
+            }
+
+            @Override
+            public void onDelete(int row) {
+                int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin menghapus data ini?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION);
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    try {
+                        if (tblJadwal.isEditing()) {
+                            tblJadwal.getCellEditor().stopCellEditing();
+                        }
+                        dataJadwal.get(row).deleteData();
+                        
+                        showData();
+                        JOptionPane.showMessageDialog(null, "Data Jadwal Berhasil Dihapus...");
+                        
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PasienPage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                
+            }
+
+            @Override
+            public void onView(int row) {
+                System.out.println("View row : " + row);
+            }
+        };
+        
+        tblJadwal.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
+        tblJadwal.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(event));
+        
+        showData();
+        
+    }
+    
+    private void showData(){
+        DefaultTableModel tableModel;
+        tableModel = (DefaultTableModel)tblJadwal.getModel();
+        tableModel.getDataVector().removeAllElements();
+        
+        dataJadwal = Jadwal.getAllData();
+        
+        int no = 1;
+        
+        for (Jadwal jadwal : dataJadwal) {
+            tableModel.addRow(new Object[]{
+                no++,
+                jadwal.getDokter().getNama(),
+                jadwal.getDokter().getPoli().getNama_poli(),
+                jadwal.getHari(),
+                jadwal.getJam_mulai(),
+                jadwal.getJam_selesai(),
+                jadwal.getRuangan()
+            });
+        } 
     }
 
     /**
@@ -31,9 +106,10 @@ public class JadwalPage extends javax.swing.JPanel {
 
         panelBorder1 = new timsitu.customs.PanelBorder();
         spTable = new javax.swing.JScrollPane();
-        tblObat = new timsitu.customs.Table();
+        tblJadwal = new timsitu.customs.Table();
         jLabel1 = new javax.swing.JLabel();
         btnTambah = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
         panelBorder1.setPreferredSize(new java.awt.Dimension(829, 508));
@@ -41,23 +117,23 @@ public class JadwalPage extends javax.swing.JPanel {
         spTable.setBorder(null);
         spTable.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        tblObat.setModel(new javax.swing.table.DefaultTableModel(
+        tblJadwal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"  1", "Dr. Umar", "Kandungan", "Senin", "08:00", "12:00", "TULT 0712"}
+
             },
             new String [] {
-                "No", "Nama Dokter", "Poliklinik", "Hari", "Jam Mulai", "Jam Selesai", "Ruangan"
+                "No", "Nama Dokter", "Poliklinik", "Hari", "Jam Mulai", "Jam Selesai", "Ruangan", "Aksi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        spTable.setViewportView(tblObat);
+        spTable.setViewportView(tblJadwal);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 127, 127));
@@ -72,6 +148,15 @@ public class JadwalPage extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setBackground(new java.awt.Color(40, 167, 69));
+        btnRefresh.setForeground(new java.awt.Color(255, 255, 255));
+        btnRefresh.setText("Refresh Data");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
@@ -83,6 +168,8 @@ public class JadwalPage extends javax.swing.JPanel {
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh)
+                        .addGap(12, 12, 12)
                         .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -92,7 +179,8 @@ public class JadwalPage extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(120, Short.MAX_VALUE))
@@ -111,15 +199,20 @@ public class JadwalPage extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        MainPage.setForm(new FormJadwalPage("tambah"));
+        MainPage.setForm(new FormJadwalPage(null));
     }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        showData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnTambah;
     private javax.swing.JLabel jLabel1;
     private timsitu.customs.PanelBorder panelBorder1;
     private javax.swing.JScrollPane spTable;
-    private timsitu.customs.Table tblObat;
+    private timsitu.customs.Table tblJadwal;
     // End of variables declaration//GEN-END:variables
 }

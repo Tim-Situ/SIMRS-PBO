@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import timsitu.config.ConnectionDB;
+import timsitu.enums.EnumJenisKelamin;
 
 public class Pasien extends User{
     private String kode;
@@ -60,7 +61,7 @@ public class Pasien extends User{
         String sql;
         
         ConnectionDB db = new ConnectionDB();
-        sql = "INSERT INTO user VALUES (" + null + ", '" + getNama() + "', '" + "2024-01-03" + "', '" + getNoHp() + "', '" + getJenisKelamin() + "', '" + getAlamat() + "', " + null + ", " + null + ", "+null+")";
+        sql = "INSERT INTO user VALUES (" + null + ", '" + getNama() + "', '" + getTanggalLahir() + "', '" + getNoHp() + "', '" + getJenisKelamin() + "', '" + getAlamat() + "', " + null + ", " + null + ", "+null+")";
         id = db.addQuery(sql);
         
         sql = "INSERT INTO pasien VALUES (" + null + ", '" + kode + "', " + id + ")";

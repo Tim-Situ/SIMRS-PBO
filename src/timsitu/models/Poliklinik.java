@@ -78,7 +78,7 @@ public class Poliklinik {
         ConnectionDB db = new ConnectionDB();
         sql = "UPDATE poliklinik SET nama_poli='" + nama_poli + "', "
                 + "keterangan='" + keterangan + "' "
-                + "WHERE kode_poliklinik=" + kode;
+                + "WHERE kode_poliklinik='" + kode + "'";
         db.query(sql);
     }
     

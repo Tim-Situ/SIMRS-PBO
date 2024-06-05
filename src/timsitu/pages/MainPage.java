@@ -8,7 +8,7 @@ import timsitu.pages.apoteker.ApotekerPage;
 import timsitu.pages.dokter.DokterPage;
 import timsitu.pages.obat.ObatPage;
 import timsitu.pages.pasien.PasienPage;
-import timsitu.pages.pendaftaran.PendaftaranAdminPage;
+import timsitu.pages.reservasi.ReservasiByAdminPage;
 import timsitu.pages.transaksi.FormTransaksiPage;
 
 

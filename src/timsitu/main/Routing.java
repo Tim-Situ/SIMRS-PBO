@@ -12,7 +12,7 @@ import timsitu.pages.obat.ObatPage;
 import timsitu.pages.obat.PengambilanObatPage;
 import timsitu.pages.pasien.PasienPage;
 import timsitu.pages.pemeriksaan.PemeriksaanPage;
-import timsitu.pages.pendaftaran.PendaftaranAdminPage;
+import timsitu.pages.reservasi.ReservasiByAdminPage;
 import timsitu.pages.poliklinik.PoliklinikPage;
 import timsitu.pages.transaksi.FormTransaksiPage;
 
@@ -24,7 +24,7 @@ public class Routing {
     private PasienPage pasienPage;
     private DokterPage dokterPage;
     private ApotekerPage apotekerPage;
-    private PendaftaranAdminPage pendaftaranAdmin;
+    private ReservasiByAdminPage pendaftaranAdmin;
     private FormTransaksiPage formTransaksiPage;
     private PoliklinikPage poliklinikPage;
 
@@ -35,7 +35,7 @@ public class Routing {
         this.pasienPage = new PasienPage();
         this.dokterPage = new DokterPage();
         this.apotekerPage = new ApotekerPage();
-        this.pendaftaranAdmin = new PendaftaranAdminPage();
+        this.pendaftaranAdmin = new ReservasiByAdminPage();
         this.formTransaksiPage = new FormTransaksiPage();
         this.poliklinikPage = new PoliklinikPage();
     }

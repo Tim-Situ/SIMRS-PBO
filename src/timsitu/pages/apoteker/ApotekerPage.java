@@ -53,14 +53,12 @@ public class ApotekerPage extends javax.swing.JPanel {
                     } catch (SQLException ex) {
                         Logger.getLogger(PasienPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                
-                
+                }  
             }
 
             @Override
-            public void onView(int row) {
-                System.out.println("View row : " + row);
+            public void onClick(int row) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         };
         

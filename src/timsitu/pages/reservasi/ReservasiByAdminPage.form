@@ -60,9 +60,9 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="102" max="-2" attributes="0"/>
+                          <Component id="txtKodePasien" min="-2" pref="102" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" pref="48" max="-2" attributes="0"/>
+                          <Component id="btnCariPasien" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -75,8 +75,8 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="txtKodePasien" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="btnCariPasien" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="143" max="-2" attributes="0"/>
@@ -91,12 +91,15 @@
             <Property name="text" type="java.lang.String" value="ID Pasien :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtKodePasien">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnCariPasien">
           <Properties>
             <Property name="text" type="java.lang.String" value="V"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCariPasienActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -105,7 +108,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="taDetailPasien">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -113,7 +116,6 @@
                 </Property>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -164,12 +166,7 @@
         <Component class="javax.swing.JComboBox" name="cbSpesialis">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Cari Spesialis"/>
-                <StringItem index="1" value="Gigi"/>
-                <StringItem index="2" value="THT"/>
-                <StringItem index="3" value="Penyakit Dalam"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -237,14 +234,17 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="timsitu.customs.Table" name="tblDokter">
+            <Component class="timsitu.customs.Table" name="tblJadwalDokter">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="0">
+                  <Table columnCount="7" rowCount="0">
                     <Column editable="false" title="No" type="java.lang.Object"/>
                     <Column editable="false" title="Kode" type="java.lang.Object"/>
                     <Column editable="false" title="Nama Dokter" type="java.lang.Object"/>
                     <Column editable="false" title="Jenis Kelamin" type="java.lang.Object"/>
+                    <Column editable="false" title="Jam Mulai" type="java.lang.Object"/>
+                    <Column editable="false" title="Jam Selesai" type="java.lang.Object"/>
+                    <Column editable="true" title="Aksi" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>

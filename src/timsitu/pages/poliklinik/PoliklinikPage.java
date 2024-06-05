@@ -14,7 +14,6 @@ import timsitu.models.Poliklinik;
 import timsitu.models.TableActionCellEditor;
 import timsitu.models.TableActionCellRender;
 import timsitu.pages.*;
-import timsitu.pages.obat.FormObatPage;
 import timsitu.pages.pasien.PasienPage;
 
 public class PoliklinikPage extends javax.swing.JPanel {
@@ -54,15 +53,11 @@ public class PoliklinikPage extends javax.swing.JPanel {
                     } catch (SQLException ex) {
                         Logger.getLogger(PasienPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                
-                
+                }   
             }
 
             @Override
-            public void onView(int row) {
-                System.out.println("View row : " + row);
-            }
+            public void onClick(int row) {}
         };
         
         tblPoliklinik.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());

@@ -1,14 +1,29 @@
-package timsitu.pages.pendaftaran;
+package timsitu.pages.reservasi;
 
-import timsitu.pages.obat.*;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import timsitu.pages.*;
+import javax.swing.table.DefaultTableModel;
+import timsitu.events.TableActionEvent;
+import timsitu.models.Jadwal;
+import timsitu.models.Pasien;
+import timsitu.models.Poliklinik;
+import timsitu.models.Reservasi;
+import timsitu.models.SingleActionButtonEditor;
+import timsitu.models.SingleActionButtonRender;
 
-public class PendaftaranAdminPage extends javax.swing.JPanel {
+public class ReservasiByAdminPage extends javax.swing.JPanel {
+    
+    ArrayList<Jadwal> dataJadwal;
+    ArrayList<Poliklinik> dataPoli;
+    Pasien pasien = null;
 
-    public PendaftaranAdminPage() {
+    public ReservasiByAdminPage() {
         
         initComponents();
         
@@ -18,6 +33,90 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {}
+
+            @Override
+            public void onDelete(int row) {}
+
+            @Override
+            public void onClick(int row) {
+                if(pasien != null){
+                    String kode = Reservasi.generateKode();
+                    Jadwal jadwal = dataJadwal.get(row);
+                    Date currentDate = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String tanggal = sdf.format(currentDate);
+                    int noAntrian = Reservasi.generateNoAntrian();
+                    
+                    Reservasi reservasi = new Reservasi(kode, pasien, jadwal, noAntrian, tanggal);
+                    
+                    int choice = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin melakukan pemeriksaan dengan jadwal dokter ini?", "Konfirmasi Reservasi", JOptionPane.YES_NO_OPTION);
+
+                    if (choice == JOptionPane.YES_OPTION) {
+                        try {
+                            reservasi.simpanData();
+
+                            JOptionPane.showMessageDialog(null, "Reservasi Berhasil. No Antrian Anda : " + reservasi.getNoAntrian());
+                            
+                            
+                            txtKodePasien.setText(null);
+                            taDetailPasien.setText(null);
+
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Reservasi Gagal. Terjadi Kesalahan SIstem");
+                        }
+                    }  
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "Data Pasien Tidak Boleh Kosong...");
+                }
+                
+                DefaultTableModel tableModel;
+                            tableModel = (DefaultTableModel)tblJadwalDokter.getModel();
+                            tableModel.getDataVector().removeAllElements();
+            }
+        };
+        
+        tblJadwalDokter.getColumnModel().getColumn(6).setCellRenderer(new SingleActionButtonRender("Reservasi"));
+        tblJadwalDokter.getColumnModel().getColumn(6).setCellEditor(new SingleActionButtonEditor(event, "Reservasi"));
+        
+        showDataPoli();
+    }
+    
+    private void showJadwalDokter(String kodePoli){
+        DefaultTableModel tableModel;
+        tableModel = (DefaultTableModel)tblJadwalDokter.getModel();
+        tableModel.getDataVector().removeAllElements();
+        
+        dataJadwal = Jadwal.getAllData(kodePoli);
+        
+        int no = 1;
+        
+        if(dataJadwal != null){
+            for (Jadwal jadwal : dataJadwal) {
+                tableModel.addRow(new Object[]{
+                    no++,
+                    jadwal.getKode(),
+                    jadwal.getDokter().getNama(),
+                    jadwal.getDokter().getJenisKelamin().toString(),
+                    jadwal.getJam_mulai(),
+                    jadwal.getJam_selesai()
+                });
+            }  
+        }else{
+            JOptionPane.showMessageDialog(null, "Jadwal Dokter Tidak Tersedia...");
+        }
+    }
+    
+    private void showDataPoli(){
+        dataPoli = Poliklinik.getAllData();
+        cbSpesialis.removeAllItems();
+        
+        for (Poliklinik poliklinik : dataPoli) {
+            cbSpesialis.addItem(poliklinik.getNama_poli());
+        }
     }
 
     /**
@@ -31,17 +130,17 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
 
         panelBorder2 = new timsitu.customs.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtKodePasien = new javax.swing.JTextField();
+        btnCariPasien = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taDetailPasien = new javax.swing.JTextArea();
         panelBorder1 = new timsitu.customs.PanelBorder();
         jLabel2 = new javax.swing.JLabel();
         cbSpesialis = new javax.swing.JComboBox<>();
         btnCariDokter = new javax.swing.JButton();
         panelBorder3 = new timsitu.customs.PanelBorder();
         spTable = new javax.swing.JScrollPane();
-        tblDokter = new timsitu.customs.Table();
+        tblJadwalDokter = new timsitu.customs.Table();
 
         setPreferredSize(new java.awt.Dimension(829, 508));
 
@@ -49,14 +148,18 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
 
         jLabel1.setText("ID Pasien :");
 
-        jButton1.setText("V");
+        btnCariPasien.setText("V");
+        btnCariPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariPasienActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setEnabled(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        taDetailPasien.setEditable(false);
+        taDetailPasien.setBackground(new java.awt.Color(255, 255, 255));
+        taDetailPasien.setColumns(20);
+        taDetailPasien.setRows(5);
+        jScrollPane1.setViewportView(taDetailPasien);
 
         javax.swing.GroupLayout panelBorder2Layout = new javax.swing.GroupLayout(panelBorder2);
         panelBorder2.setLayout(panelBorder2Layout);
@@ -69,9 +172,9 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
                     .addGroup(panelBorder2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtKodePasien, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCariPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         panelBorder2Layout.setVerticalGroup(
@@ -80,8 +183,8 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addGroup(panelBorder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtKodePasien, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCariPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -90,8 +193,6 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setText("Pilih Spesialis");
-
-        cbSpesialis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cari Spesialis", "Gigi", "THT", "Penyakit Dalam" }));
 
         btnCariDokter.setBackground(new java.awt.Color(0, 141, 218));
         btnCariDokter.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,23 +232,23 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
 
         spTable.setBorder(null);
 
-        tblDokter.setModel(new javax.swing.table.DefaultTableModel(
+        tblJadwalDokter.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "Kode", "Nama Dokter", "Jenis Kelamin"
+                "No", "Kode", "Nama Dokter", "Jenis Kelamin", "Jam Mulai", "Jam Selesai", "Aksi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        spTable.setViewportView(tblDokter);
+        spTable.setViewportView(tblJadwalDokter);
 
         javax.swing.GroupLayout panelBorder3Layout = new javax.swing.GroupLayout(panelBorder3);
         panelBorder3.setLayout(panelBorder3Layout);
@@ -189,33 +290,42 @@ public class PendaftaranAdminPage extends javax.swing.JPanel {
 
     private void btnCariDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariDokterActionPerformed
         // TODO add your handling code here:
-        String spesialis = cbSpesialis.getSelectedItem().toString();
-        
-        if(spesialis.equals("Gigi")){
-            tblDokter.removeAllRow();
-            tblDokter.addRow(new Object[]{1, "DKT01", "Dr. Aulia", "Wanita"});
-        }else if(spesialis.equals("THT")){
-            tblDokter.removeAllRow();
-            tblDokter.addRow(new Object[]{1, "DKT05", "Dr. Anwar", "Pria"});
-        }else{
-            tblDokter.removeAllRow();
-        }
+        showJadwalDokter(dataPoli.get(cbSpesialis.getSelectedIndex()).getKode());
     }//GEN-LAST:event_btnCariDokterActionPerformed
+
+    private void btnCariPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariPasienActionPerformed
+        if(!txtKodePasien.equals(null)){
+            pasien = Pasien.cariData(txtKodePasien.getText());
+            
+            if(pasien != null){
+                taDetailPasien.setText(
+                    "Nama            : " + pasien.getNama() + "\n" +
+                    "Tanggal Lahir : " + pasien.getTanggalLahir() + "\n" +
+                    "No Hp           : " + pasien.getNoHp() + "\n" +
+                    "Jenis Kelamin : " + pasien.getJenisKelamin().toString() + "\n" +
+                    "Alamat          : " + pasien.getAlamat()
+                );
+            }else{
+                taDetailPasien.setText("*Data Pasien Tidak Ditemukan...");
+            }
+            
+        }
+    }//GEN-LAST:event_btnCariPasienActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCariDokter;
+    private javax.swing.JButton btnCariPasien;
     private javax.swing.JComboBox<String> cbSpesialis;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private timsitu.customs.PanelBorder panelBorder1;
     private timsitu.customs.PanelBorder panelBorder2;
     private timsitu.customs.PanelBorder panelBorder3;
     private javax.swing.JScrollPane spTable;
-    private timsitu.customs.Table tblDokter;
+    private javax.swing.JTextArea taDetailPasien;
+    private timsitu.customs.Table tblJadwalDokter;
+    private javax.swing.JTextField txtKodePasien;
     // End of variables declaration//GEN-END:variables
 }

@@ -112,6 +112,45 @@ public class Jadwal {
         return dataJadwal;
     }
     
+    public static ArrayList<Jadwal> getAllData(String kodePoli){
+        ArrayList<Jadwal> dataJadwal = new ArrayList();
+        Jadwal jadwal;
+        Dokter dokter;
+        Poliklinik poli;
+        
+        EnumHari hari;
+        EnumJenisKelamin jenisKelaminDokter;
+        
+        try {
+            ConnectionDB db = new ConnectionDB();
+            String sql = "SELECT jadwal.*, dokter.kode_poli, dokter.nip, user.nama, user.jenis_kelamin, poliklinik.nama_poli FROM jadwal "
+                    + "INNER JOIN dokter ON dokter.kode_dokter = jadwal.kode_dokter "
+                    + "INNER JOIN user ON user.id = dokter.id_user "
+                    + "INNER JOIN poliklinik ON poliklinik.kode_poliklinik = dokter.kode_poli "
+                    + "WHERE poliklinik.kode_poliklinik = '" + kodePoli + "'";
+            
+            ResultSet rs = db.getData(sql);
+            
+            while(rs.next()){
+               
+                hari = EnumHari.valueOf(rs.getString("hari"));
+                jenisKelaminDokter = EnumJenisKelamin.valueOf(rs.getString("jenis_kelamin"));
+                
+                poli = new Poliklinik(rs.getString("kode_poli"), rs.getString("nama_poli"), null);
+                dokter = new Dokter(rs.getString("kode_dokter"), rs.getString("nip"), rs.getString("nama"), poli, null, null, jenisKelaminDokter, null, null, null);
+                
+                jadwal = new Jadwal(rs.getString("kode_jadwal"), hari, dokter, rs.getString("jam_mulai"), rs.getString("jam_selesai"), rs.getString("ruangan"));
+                dataJadwal.add(jadwal);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return dataJadwal;
+    }
+    
     public void simpanData()throws SQLException {  
         ConnectionDB db = new ConnectionDB();        
         String sql = "INSERT INTO jadwal VALUES (" + 

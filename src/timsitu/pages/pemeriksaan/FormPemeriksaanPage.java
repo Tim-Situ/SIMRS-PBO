@@ -1,24 +1,84 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package timsitu.pages.pemeriksaan;
 
-import timsitu.pages.transaksi.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import timsitu.models.Obat;
+import timsitu.models.Pemeriksaan;
+import timsitu.models.Reservasi;
 import timsitu.pages.MainPage;
-import timsitu.pages.dokter.DokterPage;
 
-/**
- *
- * @author fauzeinmulyawarman
- */
 public class FormPemeriksaanPage extends javax.swing.JPanel {
-
-    /**
-     * Creates new form FormTransaksiPage
-     */
-    public FormPemeriksaanPage() {
+    Reservasi reservasi;
+    Pemeriksaan data;
+    
+    ArrayList<Obat> dataObat;
+    ArrayList<Obat> resepObat;
+    
+    DefaultTableModel tableModel;
+        
+    
+    public FormPemeriksaanPage(Pemeriksaan data, Reservasi reservasi) {
         initComponents();
+        this.data = data;
+        this.reservasi = reservasi;
+        
+        tableModel = (DefaultTableModel)tblResepObat.getModel();
+        resepObat = new ArrayList<>();
+        
+        showDataObat();
+        resetForm();
+    }
+    
+    public void resetForm(){
+        tableModel.getDataVector().removeAllElements();
+        
+        if(data == null){
+            txtKodePemeriksaan.setText(Pemeriksaan.generateKode());
+            txtKodePasien.setText(reservasi.getPasien().getKode());
+            txtNama.setText(reservasi.getPasien().getNama());
+            txtTinggi.setText(null);
+            txtBerat.setText(null);
+            txtTekananDarah.setText(null);
+            taKeluhan.setText(null);
+            taDiagnosa.setText(null);
+            cbObat.setSelectedIndex(0);
+            txtJumlahObat.setText(null);
+            txtBiaya.setText(null);
+             
+        }else{
+            txtKodePemeriksaan.setText(data.getKode());
+            txtKodePasien.setText(reservasi.getPasien().getKode());
+            txtNama.setText(reservasi.getPasien().getNama());
+            txtTinggi.setText(Float.toString(data.getTinggiBadan()));
+            txtBerat.setText(Float.toString(data.getBeratBadan()));
+            txtTekananDarah.setText(data.getTekananDarah());
+            taKeluhan.setText(data.getKeluhan());
+            taDiagnosa.setText(data.getDiagnosa());
+            cbObat.setSelectedIndex(0);
+            txtJumlahObat.setText(null);
+            txtBiaya.setText(Integer.toString(data.getBiaya()));
+
+            int no = 1;
+
+            for (Obat obat : data.getResepObat()) {
+                tableModel.addRow(new Object[]{
+                    no++,
+                    obat.getKode(),
+                    obat.getNama(),
+                    obat.getStok()
+                });
+            } 
+        }
+    }
+    
+    public void showDataObat(){
+        dataObat = Obat.getAllData();
+        cbObat.removeAllItems();
+        
+        for (Obat obat : dataObat) {
+            cbObat.addItem(obat.getNama());
+        }
     }
 
     /**
@@ -39,29 +99,29 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        btnDataTransaksi = new javax.swing.JButton();
+        txtKodePemeriksaan = new javax.swing.JTextField();
+        txtKodePasien = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
+        txtTinggi = new javax.swing.JTextField();
+        txtBerat = new javax.swing.JTextField();
+        txtTekananDarah = new javax.swing.JTextField();
+        btnReset = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taKeluhan = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        taDiagnosa = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbObat = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        txtJumlahObat = new javax.swing.JTextField();
+        btnTambahObat = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        table1 = new timsitu.customs.Table();
-        btnDataTransaksi1 = new javax.swing.JButton();
+        tblResepObat = new timsitu.customs.Table();
+        btnHapusObat = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtBiaya = new javax.swing.JTextField();
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -90,65 +150,70 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel8.setText("Keluhan");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Otomatis");
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField1.setEnabled(false);
+        txtKodePemeriksaan.setEditable(false);
+        txtKodePemeriksaan.setBackground(new java.awt.Color(255, 255, 255));
+        txtKodePemeriksaan.setText("Otomatis");
+        txtKodePemeriksaan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setText("Otomatis");
-        jTextField2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField2.setEnabled(false);
+        txtKodePasien.setEditable(false);
+        txtKodePasien.setBackground(new java.awt.Color(255, 255, 255));
+        txtKodePasien.setText("Otomatis");
+        txtKodePasien.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("Otomatis");
-        jTextField3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jTextField3.setEnabled(false);
+        txtNama.setEditable(false);
+        txtNama.setBackground(new java.awt.Color(255, 255, 255));
+        txtNama.setText("Otomatis");
+        txtNama.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jTextField4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtTinggi.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jTextField5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtBerat.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jTextField6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtTekananDarah.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jButton2.setText("Reset Form");
-
-        btnDataTransaksi.setText("Simpan Data Pemeriksaan");
-        btnDataTransaksi.addActionListener(new java.awt.event.ActionListener() {
+        btnReset.setText("Reset Form");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDataTransaksiActionPerformed(evt);
+                btnResetActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(15);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jScrollPane1.setViewportView(jTextArea1);
+        btnSimpan.setText("Simpan Data Pemeriksaan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
+
+        taKeluhan.setColumns(15);
+        taKeluhan.setRows(5);
+        taKeluhan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jScrollPane1.setViewportView(taKeluhan);
 
         jLabel9.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel9.setText("Diagnosa");
 
-        jTextArea2.setColumns(15);
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jScrollPane2.setViewportView(jTextArea2);
+        taDiagnosa.setColumns(15);
+        taDiagnosa.setRows(5);
+        taDiagnosa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jScrollPane2.setViewportView(taDiagnosa);
 
         jLabel10.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel10.setText("Obat");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Pilih Obat ---", "Paracetamol", "Obat Sakit Gigi" }));
-
         jLabel11.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel11.setText("Jumlah");
 
-        jTextField7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtJumlahObat.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jButton4.setText("+");
+        btnTambahObat.setText("+");
+        btnTambahObat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahObatActionPerformed(evt);
+            }
+        });
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tblResepObat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "OBT01", "Paracetamol", "100"}
             },
@@ -164,19 +229,19 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(table1);
+        jScrollPane3.setViewportView(tblResepObat);
 
-        btnDataTransaksi1.setText("Hapus Obat");
-        btnDataTransaksi1.addActionListener(new java.awt.event.ActionListener() {
+        btnHapusObat.setText("Hapus Obat");
+        btnHapusObat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDataTransaksi1ActionPerformed(evt);
+                btnHapusObatActionPerformed(evt);
             }
         });
 
         jLabel12.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel12.setText("Biaya Pemeriksaan");
 
-        jTextField8.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtBiaya.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -200,29 +265,29 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(40, 40, 40)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6)
+                            .addComponent(txtKodePemeriksaan, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(txtKodePasien)
+                            .addComponent(txtNama)
+                            .addComponent(txtTinggi)
+                            .addComponent(txtBerat)
+                            .addComponent(txtTekananDarah)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                             .addComponent(jScrollPane2))
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addGap(70, 70, 70)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                                        .addComponent(btnDataTransaksi1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnHapusObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(panelBorder1Layout.createSequentialGroup()
                                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextField8)))
-                                    .addComponent(btnDataTransaksi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(txtBiaya)))
+                                    .addComponent(btnSimpan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(463, 463, 463)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,11 +295,11 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, 0, 330, Short.MAX_VALUE)
+                            .addComponent(cbObat, 0, 330, Short.MAX_VALUE)
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(jTextField7)
+                                .addComponent(txtJumlahObat)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnTambahObat, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(30, 30, 30))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -256,21 +321,21 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtKodePemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtKodePasien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(13, 13, 13)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtTinggi, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(12, 12, 12)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtBerat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTekananDarah, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -281,25 +346,25 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbObat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtJumlahObat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTambahObat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDataTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnHapusObat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDataTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -315,22 +380,64 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDataTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataTransaksiActionPerformed
-        TransaksiPage transaksiPage = new TransaksiPage();
-        MainPage.setForm(transaksiPage);
-    }//GEN-LAST:event_btnDataTransaksiActionPerformed
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        String kodePemeriksaan = txtKodePemeriksaan.getText();
+        int tinggiBadan = Integer.parseInt(txtTinggi.getText()); 
+        int beratBadan = Integer.parseInt(txtBerat.getText()); 
+        String tekananDarah = txtTekananDarah.getText();
+        String keluhan = taKeluhan.getText();
+        String diagnosa = taDiagnosa.getText();
+        int biaya = Integer.parseInt(txtBiaya.getText());
+        
+        try {           
+            data = new Pemeriksaan(kodePemeriksaan, tinggiBadan, beratBadan, tekananDarah, keluhan, diagnosa, biaya, resepObat);
+            data.simpanData(reservasi.getKode());
 
-    private void btnDataTransaksi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataTransaksi1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDataTransaksi1ActionPerformed
+            JOptionPane.showMessageDialog(null, "Data Pemeriksaan Berhasil Ditambahkan...");
+            
+
+            MainPage.setForm(new PemeriksaanPage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),"Gagal", JOptionPane.WARNING_MESSAGE);
+        } 
+        
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnHapusObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusObatActionPerformed
+        tableModel.getDataVector().removeAllElements();
+        tblResepObat.addRow(null);
+        resepObat.clear();
+    }//GEN-LAST:event_btnHapusObatActionPerformed
+
+    private void btnTambahObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahObatActionPerformed
+        resepObat.add(dataObat.get(cbObat.getSelectedIndex()));
+        resepObat.getLast().setStok(Integer.parseInt(txtJumlahObat.getText()));
+        
+        tableModel.getDataVector().removeAllElements();
+        
+        int no = 1;
+
+        for (Obat obat : resepObat) {
+            tableModel.addRow(new Object[]{
+                no++,
+                obat.getKode(),
+                obat.getNama(),
+                obat.getStok()
+            });
+        } 
+    }//GEN-LAST:event_btnTambahObatActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        resetForm();
+    }//GEN-LAST:event_btnResetActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDataTransaksi;
-    private javax.swing.JButton btnDataTransaksi1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnHapusObat;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTambahObat;
+    private javax.swing.JComboBox<String> cbObat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -346,17 +453,17 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private timsitu.customs.PanelBorder panelBorder1;
-    private timsitu.customs.Table table1;
+    private javax.swing.JTextArea taDiagnosa;
+    private javax.swing.JTextArea taKeluhan;
+    private timsitu.customs.Table tblResepObat;
+    private javax.swing.JTextField txtBerat;
+    private javax.swing.JTextField txtBiaya;
+    private javax.swing.JTextField txtJumlahObat;
+    private javax.swing.JTextField txtKodePasien;
+    private javax.swing.JTextField txtKodePemeriksaan;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtTekananDarah;
+    private javax.swing.JTextField txtTinggi;
     // End of variables declaration//GEN-END:variables
 }

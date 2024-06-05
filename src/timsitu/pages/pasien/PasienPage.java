@@ -58,9 +58,7 @@ public class PasienPage extends javax.swing.JPanel {
             }
 
             @Override
-            public void onView(int row) {
-                System.out.println("View row : " + row);
-            }
+            public void onClick(int row) {}
         };
         
         tblPasien.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());

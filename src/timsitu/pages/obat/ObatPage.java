@@ -59,9 +59,7 @@ public class ObatPage extends javax.swing.JPanel {
             }
 
             @Override
-            public void onView(int row) {
-                System.out.println("View row : " + row);
-            }
+            public void onClick(int row) {}
         };
         
         tblObat.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());

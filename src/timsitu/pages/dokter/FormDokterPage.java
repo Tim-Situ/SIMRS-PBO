@@ -10,10 +10,8 @@ import javax.swing.JOptionPane;
 import timsitu.enums.EnumJenisKelamin;
 import timsitu.models.Dokter;
 import timsitu.models.Poliklinik;
-import timsitu.models.User;
 import timsitu.pages.MainPage;
 import timsitu.pages.pasien.FormPasienPage;
-import timsitu.pages.pasien.PasienPage;
 public class FormDokterPage extends javax.swing.JPanel {
 
     Dokter dokter;

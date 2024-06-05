@@ -1,14 +1,11 @@
 package timsitu.controllers;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import timsitu.config.ConnectionDB;
 import timsitu.models.User;
 import timsitu.models.UserSessions;
-import timsitu.pages.MainPage;
 
 public class AuthController {
     

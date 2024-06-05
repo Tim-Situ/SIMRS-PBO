@@ -1,8 +1,8 @@
 package timsitu.pages.jadwal;
 
-import timsitu.pages.obat.*;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import timsitu.events.TableActionEvent;
 import timsitu.models.Jadwal;
-import timsitu.models.Obat;
 import timsitu.models.TableActionCellEditor;
 import timsitu.models.TableActionCellRender;
 import timsitu.pages.*;
@@ -35,7 +34,11 @@ public class JadwalPage extends javax.swing.JPanel {
         TableActionEvent event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
-                MainPage.setForm(new FormJadwalPage(dataJadwal.get(row)));
+                try {
+                    MainPage.setForm(new FormJadwalPage(dataJadwal.get(row)));
+                } catch (ParseException ex) {
+                    Logger.getLogger(JadwalPage.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             @Override
@@ -61,9 +64,7 @@ public class JadwalPage extends javax.swing.JPanel {
             }
 
             @Override
-            public void onView(int row) {
-                System.out.println("View row : " + row);
-            }
+            public void onClick(int row) {}
         };
         
         tblJadwal.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
@@ -199,7 +200,11 @@ public class JadwalPage extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        MainPage.setForm(new FormJadwalPage(null));
+        try {
+            MainPage.setForm(new FormJadwalPage(null));
+        } catch (ParseException ex) {
+            Logger.getLogger(JadwalPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed

@@ -56,6 +56,34 @@ public class Pasien extends User{
         return dataPasien;
     }
     
+    public static Pasien cariData(String kode){
+        Pasien pasien = null;
+        
+        try {
+            ConnectionDB db = new ConnectionDB();
+            String sql = "SELECT * FROM user INNER JOIN pasien ON user.id = pasien.id_user WHERE pasien.kode_pasien='"+ kode +"'";
+            ResultSet rs = db.getData(sql);
+            
+            if(rs.next()){
+                pasien = new Pasien(
+                    rs.getString("kode_pasien"), 
+                    rs.getString("nama"), 
+                    rs.getString("tanggal_lahir"), 
+                    rs.getString("no_hp"), 
+                    rs.getString("jenis_kelamin").equals("PRIA") ? EnumJenisKelamin.PRIA : EnumJenisKelamin.WANITA, 
+                    rs.getString("alamat")
+                );
+                pasien.setIdUser(rs.getInt(1));
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return pasien;
+    }
+    
     public void simpanData()throws SQLException {
         int id;
         String sql;

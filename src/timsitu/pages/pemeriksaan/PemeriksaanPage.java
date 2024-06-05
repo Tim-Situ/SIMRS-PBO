@@ -1,14 +1,21 @@
 package timsitu.pages.pemeriksaan;
 
-import timsitu.pages.transaksi.*;
-import timsitu.pages.pasien.*;
-import timsitu.pages.obat.*;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import timsitu.events.TableActionEvent;
+import timsitu.models.Pemeriksaan;
+import timsitu.models.Reservasi;
+import timsitu.models.SingleActionButtonEditor;
+import timsitu.models.SingleActionButtonRender;
 import timsitu.pages.*;
+import timsitu.pages.obat.FormObatPage;
 
 public class PemeriksaanPage extends javax.swing.JPanel {
+    ArrayList<Reservasi> dataReservasi;
+    Pemeriksaan pemeriksaan = null;
 
     public PemeriksaanPage() {
         
@@ -20,6 +27,45 @@ public class PemeriksaanPage extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {}
+
+            @Override
+            public void onDelete(int row) {}
+
+            @Override
+            public void onClick(int row) {
+                pemeriksaan = Pemeriksaan.getData(dataReservasi.get(row).getKode());
+                MainPage.setForm(new FormPemeriksaanPage(pemeriksaan, dataReservasi.get(row)));
+            }
+        };
+        
+        tblPameriksaan.getColumnModel().getColumn(6).setCellRenderer(new SingleActionButtonRender("Periksa"));
+        tblPameriksaan.getColumnModel().getColumn(6).setCellEditor(new SingleActionButtonEditor(event, "Periksa"));
+        
+        showData();
+    }
+    
+    private void showData(){
+        DefaultTableModel tableModel;
+        tableModel = (DefaultTableModel)tblPameriksaan.getModel();
+        tableModel.getDataVector().removeAllElements();
+        
+        dataReservasi = Reservasi.getAllData(35);
+        
+        int no = 1;
+        
+        for (Reservasi data : dataReservasi) {
+            tableModel.addRow(new Object[]{
+                no++,
+                data.getPasien().getKode(),
+                data.getPasien().getNama(),
+                data.getPasien().getJenisKelamin().toString(),
+                data.getNoAntrian(),
+                data.getStatus()
+            });
+        } 
     }
 
     /**
@@ -46,31 +92,25 @@ public class PemeriksaanPage extends javax.swing.JPanel {
 
         tblPameriksaan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "PSN01", "Fauzein Mulya Warman", "Pria", "Menunggu", "Periksa"},
-                {"2", "PSN10", "Munaroh", "Wanita", "Selesai", "Detail"}
+
             },
             new String [] {
-                "No", "Kode Pasien", "Nama Pasien", "Jenis Kelamin", "Status", "Aksi"
+                "No", "Kode Pasien", "Nama Pasien", "Jenis Kelamin", "No Antrian", "Status", "Aksi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblPameriksaan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblPameriksaanMouseClicked(evt);
-            }
-        });
         spTable.setViewportView(tblPameriksaan);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(127, 127, 127));
-        jLabel1.setText("Data Pemeriksaan");
+        jLabel1.setText("Data Reservasi");
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -81,7 +121,7 @@ public class PemeriksaanPage extends javax.swing.JPanel {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 738, Short.MAX_VALUE))
+                        .addGap(0, 641, Short.MAX_VALUE))
                     .addComponent(spTable))
                 .addGap(30, 30, 30))
         );
@@ -99,17 +139,13 @@ public class PemeriksaanPage extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, 953, Short.MAX_VALUE)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tblPameriksaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPameriksaanMouseClicked
-        MainPage.setForm(new FormPemeriksaanPage());
-    }//GEN-LAST:event_tblPameriksaanMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

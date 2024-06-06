@@ -2,7 +2,7 @@ package timsitu.models;
 
 public class UserSessions {
     private static String name = "null";
-    private static User.EnumRole role = User.EnumRole.DOKTER;
+    private static User.EnumRole role = User.EnumRole.ADMIN;
 
     public static String getName() {
         return name;

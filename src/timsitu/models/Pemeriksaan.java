@@ -139,6 +139,40 @@ public class Pemeriksaan {
         return data;
     }
     
+    public static Transaksi getDetailData(String kodePemeriksaan){
+        Transaksi data = null;
+        String sql;
+        ConnectionDB db;
+        ResultSet rs;
+        
+        try {
+            db = new ConnectionDB();
+            
+            sql = "SELECT "
+                    + "prs.kode_pemeriksaan, prs.biaya, rsv.tanggal AS tanggal_reservasi, up.nama AS nama_pasien, ud.nama AS nama_dokter "
+                    + "FROM pemeriksaan prs "
+                    + "INNER JOIN reservasi rsv ON rsv.kode_reservasi = prs.kode_reservasi "
+                    + "INNER JOIN pasien psn ON rsv.kode_pasien = psn.kode_pasien "
+                    + "INNER JOIN user up ON up.id = psn.id_user "
+                    + "INNER JOIN jadwal jdwl ON jdwl.kode_jadwal = rsv.kode_jadwal "
+                    + "INNER JOIN dokter dkt ON dkt.kode_dokter = jdwl.kode_dokter "
+                    + "INNER JOIN user ud ON ud.id = dkt.id_user "
+                    + "WHERE prs.kode_pemeriksaan = '"+ kodePemeriksaan +"'";
+            
+            rs = db.getData(sql);
+            
+            if(rs.next()){
+                data = new Transaksi(null, rs.getString("kode_pemeriksaan"), rs.getString("tanggal_reservasi"), rs.getString("nama_pasien"), rs.getString("nama_dokter"), rs.getInt("biaya"), 0); 
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return data;
+    }
+    
     public void simpanData(String kodeReservasi)throws SQLException {  
         ConnectionDB db = new ConnectionDB();        
         String sql = "INSERT INTO pemeriksaan VALUES (" + null + ", '" + kode + "', '" + kodeReservasi + "', "+ tinggiBadan +", "+ beratBadan +", '"+ tekananDarah +"', '"+ keluhan +"', '"+ diagnosa +"', "+ biaya +")";

@@ -96,6 +96,32 @@ public class Obat {
         return dataObat;
     }
     
+    public static ArrayList<Obat> getResepObat(String kodePemeriksaan){
+        ArrayList<Obat> dataObat = new ArrayList();
+        EnumJenisObat jenis;
+        
+        try {
+            ConnectionDB db = new ConnectionDB();
+            String sql = "SELECT resep_obat.kode_obat, resep_obat.jumlah, obat.harga, obat.nama_obat, obat.jenis FROM resep_obat "
+                    + "INNER JOIN obat ON obat.kode_obat = resep_obat.kode_obat "
+                    + "WHERE resep_obat.kode_pemeriksaan = '"+ kodePemeriksaan +"'";
+            
+            ResultSet rs = db.getData(sql);
+            
+            while(rs.next()){
+                jenis = EnumJenisObat.valueOf(rs.getString("jenis"));
+                Obat data = new Obat(rs.getString("kode_obat"), rs.getString("nama_obat"), rs.getInt("harga"), rs.getInt("jumlah"), jenis);
+                dataObat.add(data);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return dataObat;
+    }
+    
     public void simpanData()throws SQLException {  
         ConnectionDB db = new ConnectionDB();        
         String sql = "INSERT INTO obat VALUES (" + null + ", '" + kode + "', '" + nama + "', " + harga + ", " + stok + ", '" + jenis +"')";

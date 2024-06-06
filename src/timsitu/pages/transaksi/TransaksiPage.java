@@ -1,13 +1,18 @@
 package timsitu.pages.transaksi;
 
-import timsitu.pages.pasien.*;
-import timsitu.pages.obat.*;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import timsitu.pages.*;
+import javax.swing.table.DefaultTableModel;
+import timsitu.models.Obat;
+import timsitu.models.TableActionCellEditor;
+import timsitu.models.TableActionCellRender;
+import timsitu.models.Transaksi;
 
 public class TransaksiPage extends javax.swing.JPanel {
+    
+    ArrayList<Transaksi> dataTransaksi;
 
     public TransaksiPage() {
         
@@ -19,6 +24,28 @@ public class TransaksiPage extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
+        showData();
+    }
+    
+    private void showData(){
+        DefaultTableModel tableModel;
+        tableModel = (DefaultTableModel)tblPasien.getModel();
+        tableModel.getDataVector().removeAllElements();
+        
+        dataTransaksi = Transaksi.getAllData();
+        
+        int no = 1;
+        
+        for (Transaksi data : dataTransaksi) {
+            tableModel.addRow(new Object[]{
+                no++,
+                data.getKode(),
+                data.getTanggal(),
+                data.getPasien(),
+                data.getDokter(),
+                data.getTotalBiaya()
+            });
+        } 
     }
 
     /**
@@ -34,6 +61,7 @@ public class TransaksiPage extends javax.swing.JPanel {
         spTable = new javax.swing.JScrollPane();
         tblPasien = new timsitu.customs.Table();
         jLabel1 = new javax.swing.JLabel();
+        btnRefresh = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(829, 508));
 
@@ -65,25 +93,39 @@ public class TransaksiPage extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(127, 127, 127));
         jLabel1.setText("Data Transaksi");
 
+        btnRefresh.setBackground(new java.awt.Color(40, 167, 69));
+        btnRefresh.setForeground(new java.awt.Color(255, 255, 255));
+        btnRefresh.setText("Refresh Data");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh))
                     .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -98,8 +140,13 @@ public class TransaksiPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        showData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JLabel jLabel1;
     private timsitu.customs.PanelBorder panelBorder1;
     private javax.swing.JScrollPane spTable;

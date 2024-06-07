@@ -4,27 +4,17 @@ import javax.swing.Icon;
 
 public class Card {
     
-    private Icon icon;
     private String title;
     private String value;
     private String description;
 
-    public Card(Icon icon, String title, String value, String description) {
-        this.icon = icon;
+    public Card(String title, String value, String description) {
         this.title = title;
         this.value = value;
         this.description = description;
     }
 
     public Card() {}
-
-    public Icon getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Icon icon) {
-        this.icon = icon;
-    }
 
     public String getTitle() {
         return title;

@@ -10,6 +10,7 @@ import timsitu.models.Pemeriksaan;
 import timsitu.models.Reservasi;
 import timsitu.models.SingleActionButtonEditor;
 import timsitu.models.SingleActionButtonRender;
+import timsitu.models.UserSessions;
 import timsitu.pages.*;
 import timsitu.pages.obat.FormObatPage;
 
@@ -36,7 +37,7 @@ public class PemeriksaanPage extends javax.swing.JPanel {
 
             @Override
             public void onClick(int row) {
-                pemeriksaan = Pemeriksaan.getData(dataReservasi.get(row).getKode());
+                pemeriksaan = Pemeriksaan.getDataByReservasi(dataReservasi.get(row).getKode());
                 MainPage.setForm(new FormPemeriksaanPage(pemeriksaan, dataReservasi.get(row)));
             }
         };
@@ -52,7 +53,7 @@ public class PemeriksaanPage extends javax.swing.JPanel {
         tableModel = (DefaultTableModel)tblPameriksaan.getModel();
         tableModel.getDataVector().removeAllElements();
         
-        dataReservasi = Reservasi.getAllData(35);
+        dataReservasi = Reservasi.getAllData(UserSessions.getUserId());
         
         int no = 1;
         

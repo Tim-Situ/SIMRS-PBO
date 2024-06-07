@@ -4,17 +4,31 @@
  */
 package timsitu.pages;
 
+import timsitu.models.Card;
+import timsitu.models.Dokter;
+import timsitu.models.Pasien;
+import timsitu.models.Reservasi;
+
 /**
  *
  * @author fauzeinmulyawarman
  */
 public class DashboardPage extends javax.swing.JPanel {
+    
+    int jmlDokter = 0;
+    int jmlPasien = 0;
+    int jmlReservasi = 0;
 
-    /**
-     * Creates new form DashboardPage
-     */
     public DashboardPage() {
         initComponents();
+        
+        jmlDokter = Dokter.count();
+        jmlPasien = Pasien.count();
+        jmlReservasi = Reservasi.count();
+        
+        cardComponent1.setData(new Card("Dokter", Integer.toString(jmlDokter), "Dari Berbagai Poliklinik"));
+        cardComponent2.setData(new Card("Pasien", Integer.toString(jmlPasien), "Terdaftar Dalam Sistem"));
+        cardComponent3.setData(new Card("Reservasi", Integer.toString(jmlReservasi), "Pasien Melakukan Reservasi Hari Ini"));
     }
 
     /**

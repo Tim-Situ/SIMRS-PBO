@@ -33,7 +33,7 @@ public class Apoteker extends User{
     public void setKode(String kode) {
         this.kode = kode;
     }
-      
+
     public static ArrayList<Apoteker> getAllData(){
         ArrayList<Apoteker> dataApoteker = new ArrayList();
         

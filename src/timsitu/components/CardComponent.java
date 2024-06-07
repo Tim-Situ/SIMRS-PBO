@@ -21,7 +21,6 @@ public class CardComponent extends javax.swing.JPanel {
     }
     
     public void setData(Card data) {
-        lblIcon.setIcon(data.getIcon());
         lblTitle.setText(data.getTitle());
         lblValue.setText(data.getValue());
         lblDescription.setText(data.getDescription());
@@ -70,7 +69,7 @@ public class CardComponent extends javax.swing.JPanel {
         lblValue = new javax.swing.JLabel();
         lblDescription = new javax.swing.JLabel();
 
-        lblIcon.setIcon(new javax.swing.ImageIcon("/Users/fauzeinmulyawarman/Drive Local/test-code/TubesPBO/src/main/java/com/famuwa/icon/stock.png")); // NOI18N
+        lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/timsitu/icons/ic_Poliklinik.png"))); // NOI18N
 
         lblTitle.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(255, 255, 255));

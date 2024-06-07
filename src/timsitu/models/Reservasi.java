@@ -78,7 +78,7 @@ public class Reservasi {
             jadwal.getKode() + "', " + 
             noAntrian + ", '" + 
             tanggal + "', '"+
-            status +"')";
+            "Menunggu" +"')";
         
         db.query(sql); 
     }
@@ -149,6 +149,7 @@ public class Reservasi {
         return noAntrian;
     }
     
+    // Dokter
     public static ArrayList<Reservasi> getAllData(int idUser){
         ArrayList<Reservasi> dataReservasi = new ArrayList();
         Pasien pasien;
@@ -163,7 +164,8 @@ public class Reservasi {
                     + "INNER JOIN jadwal jdw ON rsv.kode_jadwal = jdw.kode_jadwal "
                     + "INNER JOIN user up ON up.id = psn.id_user "
                     + "INNER JOIN dokter dkt ON dkt.kode_dokter = jdw.kode_dokter "
-                    + "INNER JOIN user ud ON ud.id = dkt.id_user WHERE ud.id = " + idUser;
+                    + "INNER JOIN user ud ON ud.id = dkt.id_user WHERE ud.id = " + idUser
+                    + " ORDER BY no_antrian ASC, status ASC";
             
             ResultSet rs = db.getData(sql);
             
@@ -182,5 +184,30 @@ public class Reservasi {
         }
         
         return dataReservasi;
+    }
+    
+    public static int count(){
+        int count = 0;
+        
+        Date currentDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String tanggal = sdf.format(currentDate);
+        
+        try {
+            ConnectionDB db = new ConnectionDB();
+            String sql = "SELECT COUNT(*) AS jumlah_reservasi FROM reservasi WHERE tanggal='"+ tanggal +"'";
+            
+            ResultSet rs = db.getData(sql);
+            
+            if(rs.next()){
+                count = rs.getInt("jumlah_reservasi");
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return count;
     }
 }

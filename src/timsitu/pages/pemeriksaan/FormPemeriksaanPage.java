@@ -389,14 +389,30 @@ public class FormPemeriksaanPage extends javax.swing.JPanel {
         String diagnosa = taDiagnosa.getText();
         int biaya = Integer.parseInt(txtBiaya.getText());
         
-        try {           
-            data = new Pemeriksaan(kodePemeriksaan, tinggiBadan, beratBadan, tekananDarah, keluhan, diagnosa, biaya, resepObat);
-            data.simpanData(reservasi.getKode());
-
-            JOptionPane.showMessageDialog(null, "Data Pemeriksaan Berhasil Ditambahkan...");
+        boolean obatTersedia = true;
+        
+        try {         
+            Obat obat;
+            for (Obat resep : resepObat) {
+                obat = Obat.getData(resep.getKode());
+                if(obat.getStok() < resep.getStok()){
+                    obatTersedia = false;
+                    JOptionPane.showMessageDialog(null, "Data Obat " + resep.getNama() + " Tidak Mencukupi");
+                    break;
+                }else{
+                    obat.kurangiStok(resep.getStok());
+                }
+            }
             
+            if(obatTersedia){
+                data = new Pemeriksaan(kodePemeriksaan, tinggiBadan, beratBadan, tekananDarah, keluhan, diagnosa, biaya, resepObat);
+                data.simpanData(reservasi.getKode());
 
-            MainPage.setForm(new PemeriksaanPage());
+                JOptionPane.showMessageDialog(null, "Data Pemeriksaan Berhasil Ditambahkan...");
+                MainPage.setForm(new PemeriksaanPage());
+            }
+            
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),"Gagal", JOptionPane.WARNING_MESSAGE);
         } 

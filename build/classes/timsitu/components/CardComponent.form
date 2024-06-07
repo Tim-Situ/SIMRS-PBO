@@ -48,7 +48,7 @@
     <Component class="javax.swing.JLabel" name="lblIcon">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/fauzeinmulyawarman/Drive Local/test-code/TubesPBO/src/main/java/com/famuwa/icon/stock.png"/>
+          <Image iconType="3" name="/timsitu/icons/ic_Poliklinik.png"/>
         </Property>
       </Properties>
     </Component>

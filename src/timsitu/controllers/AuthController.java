@@ -24,6 +24,7 @@ public class AuthController {
                 }
 
                 UserSessions.setName(res.getString("nama"));
+                UserSessions.setUserId(res.getInt("id"));
                 
                return true;
             }else{

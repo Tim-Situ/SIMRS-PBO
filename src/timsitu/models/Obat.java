@@ -96,6 +96,37 @@ public class Obat {
         return dataObat;
     }
     
+    public static Obat getData(String kode){
+        Obat data = null;
+        EnumJenisObat jenis;
+        
+        try {
+            ConnectionDB db = new ConnectionDB();
+            String sql = "SELECT * FROM obat WHERE kode_obat = '"+ kode +"'";
+            
+            ResultSet rs = db.getData(sql);
+            
+            if(rs.next()){
+                
+                if(rs.getString("jenis").equals("PIL")){
+                    jenis = EnumJenisObat.PIL;
+                }else if(rs.getString("jenis").equals("SIRUP")){
+                    jenis = EnumJenisObat.SIRUP;
+                }else{
+                    jenis = EnumJenisObat.TABLET;
+                }
+                
+                data = new Obat(rs.getString("kode_obat"), rs.getString("nama_obat"), rs.getInt("harga"), rs.getInt("stok"), jenis);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return data;
+    }
+    
     public static ArrayList<Obat> getResepObat(String kodePemeriksaan){
         ArrayList<Obat> dataObat = new ArrayList();
         EnumJenisObat jenis;

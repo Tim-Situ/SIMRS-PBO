@@ -15,6 +15,7 @@ import timsitu.pages.pemeriksaan.PemeriksaanPage;
 import timsitu.pages.reservasi.ReservasiByAdminPage;
 import timsitu.pages.poliklinik.PoliklinikPage;
 import timsitu.pages.transaksi.FormTransaksiPage;
+import timsitu.pages.transaksi.TransaksiPage;
 
 public class Routing {
     
@@ -44,31 +45,31 @@ public class Routing {
         if (UserSessions.getRole() == User.EnumRole.ADMIN){
             switch (index) {
                 case 0:
-                    MainPage.setForm(dashboard);
+                    MainPage.setForm(new DashboardPage());
                     break;
                 case 1:
-                    MainPage.setForm(pendaftaranAdmin);
+                    MainPage.setForm(new ReservasiByAdminPage());
                     break;
                 case 2:
-                    MainPage.setForm(formTransaksiPage);
+                    MainPage.setForm(new TransaksiPage());
                     break;
                 case 3:
                     MainPage.setForm(new JadwalPage());
                     break;
                 case 7:
-                    MainPage.setForm(pasienPage);
+                    MainPage.setForm(new PasienPage());
                     break;
                 case 8:
-                    MainPage.setForm(dokterPage);
+                    MainPage.setForm(new DokterPage());
                     break;
                 case 9:
-                    MainPage.setForm(apotekerPage);
+                    MainPage.setForm(new ApotekerPage());
                     break;
                 case 10:
-                    MainPage.setForm(obatPage);
+                    MainPage.setForm(new ObatPage());
                     break;
                 case 11:
-                    MainPage.setForm(poliklinikPage);
+                    MainPage.setForm(new PoliklinikPage());
                     break;
                 case 15:
                     LoginPage loginPage = new LoginPage();
@@ -84,7 +85,7 @@ public class Routing {
         } else if (UserSessions.getRole() == User.EnumRole.DOKTER) {
             switch (index) {
                 case 0:
-                    MainPage.setForm(dashboard);
+                    MainPage.setForm(new DashboardPage());
                     break;
                 case 1:
                     MainPage.setForm(new PemeriksaanPage());
@@ -103,7 +104,7 @@ public class Routing {
         }else if (UserSessions.getRole() == User.EnumRole.APOTEKER) {
             switch (index) {
                 case 0:
-                    MainPage.setForm(dashboard);
+                    MainPage.setForm(new DashboardPage());
                     break;
                 case 1:
                     MainPage.setForm(new ObatPage());

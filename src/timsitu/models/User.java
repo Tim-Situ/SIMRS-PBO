@@ -3,7 +3,7 @@ package timsitu.models;
 import java.util.Date;
 import timsitu.enums.EnumJenisKelamin;
 
-public class User {
+public abstract class User {
     public enum EnumRole {NULL, ADMIN, DOKTER, APOTEKER}
     
     private int id;

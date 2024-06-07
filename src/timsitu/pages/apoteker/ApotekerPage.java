@@ -57,9 +57,7 @@ public class ApotekerPage extends javax.swing.JPanel {
             }
 
             @Override
-            public void onClick(int row) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
+            public void onClick(int row) {}
         };
         
         tblApoteker.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());

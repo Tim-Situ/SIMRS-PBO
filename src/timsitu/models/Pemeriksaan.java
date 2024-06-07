@@ -91,7 +91,7 @@ public class Pemeriksaan {
         this.biaya = biaya;
     }
     
-    public static Pemeriksaan getData(String kodeReservasi){
+    public static Pemeriksaan getDataByReservasi(String kodeReservasi){
         Pemeriksaan data = null;
         String sql;
         ConnectionDB db;
@@ -172,7 +172,7 @@ public class Pemeriksaan {
         
         return data;
     }
-    
+      
     public void simpanData(String kodeReservasi)throws SQLException {  
         ConnectionDB db = new ConnectionDB();        
         String sql = "INSERT INTO pemeriksaan VALUES (" + null + ", '" + kode + "', '" + kodeReservasi + "', "+ tinggiBadan +", "+ beratBadan +", '"+ tekananDarah +"', '"+ keluhan +"', '"+ diagnosa +"', "+ biaya +")";

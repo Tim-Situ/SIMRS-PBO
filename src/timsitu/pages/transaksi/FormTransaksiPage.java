@@ -26,6 +26,17 @@ public class FormTransaksiPage extends javax.swing.JPanel {
     
     public FormTransaksiPage() {
         initComponents();
+        resetForm();
+    }
+    
+    public void resetForm(){
+        txtKodeTransaksi.setText(Transaksi.generateKode());
+        txtKodePemeriksaan.setText(null);
+        txtNamaPasien.setText(null);
+        txtNamaDokter.setText(null);
+        txtTotalTagihan.setText(null);
+        txtUangBayar.setText(null);
+        txtKembalian.setText(null);
     }
 
     /**
@@ -123,6 +134,11 @@ public class FormTransaksiPage extends javax.swing.JPanel {
         });
 
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         btnDataTransaksi.setText("Data Transaksi");
         btnDataTransaksi.addActionListener(new java.awt.event.ActionListener() {
@@ -287,6 +303,10 @@ public class FormTransaksiPage extends javax.swing.JPanel {
         uangKembalian = Integer.parseInt(txtUangBayar.getText()) - totalBiaya;
         txtKembalian.setText(String.valueOf(uangKembalian));
     }//GEN-LAST:event_txtUangBayarKeyReleased
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        resetForm();
+    }//GEN-LAST:event_btnResetActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

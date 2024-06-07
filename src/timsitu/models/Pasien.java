@@ -148,4 +148,25 @@ public class Pasien extends User{
         
         return kode_pasien;
     }
+    
+    public static int count(){
+        int count = 0;
+        
+        try {
+            ConnectionDB db = new ConnectionDB();
+            String sql = "SELECT COUNT(*) AS jumlah_pasien FROM pasien";
+            
+            ResultSet rs = db.getData(sql);
+            
+            if(rs.next()){
+                count = rs.getInt("jumlah_pasien");
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error :"+e.getMessage(),
+                    "Gagal", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return count;
+    }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import timsitu.models.Obat;
 import timsitu.models.Pemeriksaan;
+import timsitu.models.Transaksi;
 import timsitu.pages.MainPage;
 public class PengambilanObatPage extends javax.swing.JPanel {
     
@@ -21,22 +22,7 @@ public class PengambilanObatPage extends javax.swing.JPanel {
         resepObat = new ArrayList<>();
     }
     
-    public void tampilData(){
-        tableModel.getDataVector().removeAllElements();
-        
-        resepObat = Obat.getResepObat(txtKodePemeriksaan.getText());
-   
-        int no = 1;
-
-        for (Obat obat : resepObat) {
-            tableModel.addRow(new Object[]{
-                no++,
-                obat.getKode(),
-                obat.getNama(),
-                obat.getStok()
-            });
-        }  
-    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,10 +36,8 @@ public class PengambilanObatPage extends javax.swing.JPanel {
         panelBorder1 = new timsitu.customs.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtKodePemeriksaan = new javax.swing.JTextField();
-        txtKodePasien = new javax.swing.JTextField();
         btnReset = new javax.swing.JButton();
         btnDataObat = new javax.swing.JButton();
         txtNamaPasien = new javax.swing.JTextField();
@@ -69,23 +53,15 @@ public class PengambilanObatPage extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel2.setText("Kode Pemeriksaan");
 
-        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
-        jLabel3.setText("Kode Pasien");
-
         jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel4.setText("Nama Pasien");
 
-        txtKodePemeriksaan.setBackground(new java.awt.Color(255, 255, 255));
         txtKodePemeriksaan.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         txtKodePemeriksaan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtKodePemeriksaanKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtKodePemeriksaanKeyReleased(evt);
             }
         });
-
-        txtKodePasien.setEditable(false);
-        txtKodePasien.setBackground(new java.awt.Color(255, 255, 255));
-        txtKodePasien.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -128,23 +104,21 @@ public class PengambilanObatPage extends javax.swing.JPanel {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(40, 40, 40)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtKodePasien, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                            .addComponent(txtNamaPasien)
-                            .addComponent(txtKodePemeriksaan))
-                        .addGap(50, 50, 50)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDataObat, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1))
+                            .addComponent(txtNamaPasien, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(txtKodePemeriksaan)))
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnDataObat, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -152,28 +126,26 @@ public class PengambilanObatPage extends javax.swing.JPanel {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(txtKodePemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addComponent(txtKodePemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47))
+                            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtNamaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(27, 27, 27)
                         .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtKodePasien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNamaPasien)
-                            .addComponent(btnDataObat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(30, 30, 30)
+                            .addComponent(btnDataObat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -192,12 +164,8 @@ public class PengambilanObatPage extends javax.swing.JPanel {
         MainPage.setForm(new ObatPage());
     }//GEN-LAST:event_btnDataObatActionPerformed
 
-    private void txtKodePemeriksaanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodePemeriksaanKeyTyped
-        tampilData();
-    }//GEN-LAST:event_txtKodePemeriksaanKeyTyped
-
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        txtKodePasien.setText(null);
+
         txtKodePemeriksaan.setText(null);
         txtNamaPasien.setText(null);
         
@@ -205,18 +173,36 @@ public class PengambilanObatPage extends javax.swing.JPanel {
         tblResepObat.removeAllRow();
     }//GEN-LAST:event_btnResetActionPerformed
 
+    private void txtKodePemeriksaanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodePemeriksaanKeyReleased
+        tableModel.getDataVector().removeAllElements();
+        
+        resepObat = Obat.getResepObat(txtKodePemeriksaan.getText());
+   
+        int no = 1;
+
+        for (Obat obat : resepObat) {
+            tableModel.addRow(new Object[]{
+                no++,
+                obat.getKode(),
+                obat.getNama(),
+                obat.getStok()
+            });
+        } 
+        
+        Transaksi data = Pemeriksaan.getDetailData(txtKodePemeriksaan.getText());
+        txtNamaPasien.setText(data.getPasien());
+    }//GEN-LAST:event_txtKodePemeriksaanKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDataObat;
     private javax.swing.JButton btnReset;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private timsitu.customs.PanelBorder panelBorder1;
     private timsitu.customs.Table tblResepObat;
-    private javax.swing.JTextField txtKodePasien;
     private javax.swing.JTextField txtKodePemeriksaan;
     private javax.swing.JTextField txtNamaPasien;
     // End of variables declaration//GEN-END:variables

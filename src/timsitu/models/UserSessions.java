@@ -1,8 +1,9 @@
 package timsitu.models;
 
 public class UserSessions {
-    private static String name = "null";
-    private static User.EnumRole role = User.EnumRole.ADMIN;
+    private static int userId;
+    private static String name;
+    private static User.EnumRole role;
 
     public static String getName() {
         return name;
@@ -18,5 +19,13 @@ public class UserSessions {
 
     public static void setRole(User.EnumRole role) {
         UserSessions.role = role;
+    }
+
+    public static int getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(int userId) {
+        UserSessions.userId = userId;
     }
 }
